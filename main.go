@@ -1,14 +1,15 @@
 package main
 
 import (
+    "google.golang.org/appengine/taskqueue"
+    "golang.org/x/net/context"
     "net/http"
-    "encoding/json"
-    "fmt"
+    "net/url"
 )
 
 type Feed struct {
-    FeedId string `json:"feed_id"`
-    FeedUrl string `json:"feed_url"`
+    FeedId string
+    FeedUrl string
 }
 
 func init() {
@@ -22,14 +23,14 @@ func init() {
             return
         }
 
-        output, err := json.Marshal(feeds)
+        for _, feed := range feeds {
+            t := taskqueue.NewPOSTTask("/handle", url.Values{
+                "feed_id": {feed.FeedId},
+                "feed_url": {feed.FeedUrl},
+            })
 
-        if err != nil {
-            http.Error(w, err.Error(), http.StatusInternalServerError)
-            return
+            taskqueue.Add(context.Background(), t, "")
         }
-
-        fmt.Fprintf(w, "%s", output)
     })
 
 }
