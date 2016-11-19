@@ -1,3 +1,5 @@
 queue:
-    - name: crawlerqueue
-      target: crawler
+- name: crawlerqueue
+  target: crawler
+  rate: 1/s
+

@@ -2,7 +2,7 @@ package main
 
 import (
     "google.golang.org/appengine/taskqueue"
-    "golang.org/x/net/context"
+    "google.golang.org/appengine"
     "net/http"
     "net/url"
 )
@@ -23,13 +23,16 @@ func init() {
             return
         }
 
+        ctx := appengine.NewContext(r)
         for _, feed := range feeds {
             t := taskqueue.NewPOSTTask("/handle", url.Values{
                 "feed_id": {feed.FeedId},
                 "feed_url": {feed.FeedUrl},
             })
 
-            taskqueue.Add(context.Background(), t, "crawlerqueue")
+            if  _, err := taskqueue.Add(ctx, t, "crawlerqueue"); err != nil {
+                http.Error(w, err.Error(), http.StatusInternalServerError)
+            }
         }
     })
 
