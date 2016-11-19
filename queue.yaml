@@ -1,5 +1,0 @@
-queue:
-- name: crawlerqueue
-  target: crawler
-  rate: 1/s
-
