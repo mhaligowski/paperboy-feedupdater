@@ -29,7 +29,7 @@ func init() {
                 "feed_url": {feed.FeedUrl},
             })
 
-            taskqueue.Add(context.Background(), t, "")
+            taskqueue.Add(context.Background(), t, "crawlerqueue")
         }
     })
 
