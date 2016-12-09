@@ -1,10 +1,11 @@
 package feedupdater
 
 import (
-	"google.golang.org/appengine"
-	"google.golang.org/appengine/taskqueue"
 	"net/http"
 	"net/url"
+
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/taskqueue"
 )
 
 type Feed struct {
