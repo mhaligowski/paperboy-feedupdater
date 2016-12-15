@@ -1,16 +1,18 @@
 package feedupdater
 
 import (
+	"encoding/json"
+
 	"net/http"
 	"net/url"
 
+	"github.com/mhaligowski/paperboy-feeds"
+
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/taskqueue"
-	"github.com/mhaligowski/paperboy-feeds"
-	"encoding/json"
 )
 
-func init() {
+func Run() {
 	feeds := []feeds.Feed{
 		{"ff0b434e9374265b95316f6e5d09193eb4f81bbc760cc508308d6ee4da5af339",
 			"Slashdot",
